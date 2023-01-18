@@ -29,13 +29,25 @@ struct ContentView: View {
                         }
                 })
         )
-        
+        .overlay(ZStack{
+            ForEach(points, id: \.y){point in
+//                FingerOverlay(with: [point])
+                EmptyView()
+            }
+        })
     }
     
     private var cameraView: some View{
-        CameraView(pointsProcessorHandler: { point in
-            DispatchQueue.main.async {
+        CameraView(pointsProcessorHandler: { points in
+            guard points.allSatisfy({ point in
+                return point.x >= 0 && point.y >= 0
+            }) else {return}
+            for point in points {
                 scene.create(point)
+            }
+            DispatchQueue.main.async {
+                
+                self.points = points
             }
         })
     }
@@ -56,9 +68,7 @@ struct FingerOverlay: Shape {
     
     func path(in rect: CGRect) -> Path {
         for point in points {
-            pointsPath.addLine(to: point)
             pointsPath.move(to: point)
-            //        pointsPath.addClip()
             pointsPath.addArc(withCenter: point, radius: 10, startAngle: 0, endAngle: 2 * .pi, clockwise: true)
         }
         

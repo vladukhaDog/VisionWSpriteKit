@@ -37,6 +37,7 @@ class GameScene: SKScene {
     func create(_ location: CGPoint){
         ///проверяем, что у нас всё есть для дальнейшей работы
         guard let particle else {return }
+        guard location.y >= 0, location.x >= 0 else {return}
         ///рисуем столько партиклов за один раз, сколько указано в настройках
         for _ in 0..<particle.maxAmount{
             
@@ -50,8 +51,9 @@ class GameScene: SKScene {
             loc.y = (scene?.size.height ?? 0) - loc.y
             loc.x += CGFloat(((particle.spreadRange).randomElement() ?? 0) * particle.spreadMultiplier)
             loc.y += CGFloat(((particle.spreadRange).randomElement() ?? 0) * particle.spreadMultiplier)
+            guard loc.y >= 0, loc.x >= 0 else {return}
             box.position = loc
-            
+            print(loc)
             ///Создаем физические свойства
             
             ///Назначаем размер физического тела

@@ -11,7 +11,7 @@ import Vision
 import UIKit
 
 enum AppError: Error {
-  case captureSessionSetup(reason: String)
+    case captureSessionSetup(reason: String)
 }
 
 
@@ -59,66 +59,66 @@ final class CameraViewController: UIViewController {
     }
     
     func setupAVSession() throws {
-      // 1
-      guard let videoDevice = AVCaptureDevice.default(
-        .builtInWideAngleCamera,
-        for: .video,
-        position: .front)
-      else {
-        throw AppError.captureSessionSetup(
-          reason: "Could not find a front facing camera."
-        )
-      }
-
-      // 2
-      guard
-        let deviceInput = try? AVCaptureDeviceInput(device: videoDevice)
-      else {
-        throw AppError.captureSessionSetup(
-          reason: "Could not create video device input."
-        )
-      }
-
-      // 3
-      let session = AVCaptureSession()
-      session.beginConfiguration()
+        // 1
+        guard let videoDevice = AVCaptureDevice.default(
+            .builtInWideAngleCamera,
+            for: .video,
+            position: .front)
+        else {
+            throw AppError.captureSessionSetup(
+                reason: "Could not find a front facing camera."
+            )
+        }
+        
+        // 2
+        guard
+            let deviceInput = try? AVCaptureDeviceInput(device: videoDevice)
+        else {
+            throw AppError.captureSessionSetup(
+                reason: "Could not create video device input."
+            )
+        }
+        
+        // 3
+        let session = AVCaptureSession()
+        session.beginConfiguration()
         session.sessionPreset = AVCaptureSession.Preset.high
-
-      // 4
-      guard session.canAddInput(deviceInput) else {
-        throw AppError.captureSessionSetup(
-          reason: "Could not add video device input to the session"
-        )
-      }
-      session.addInput(deviceInput)
-
-      // 5
-      let dataOutput = AVCaptureVideoDataOutput()
-      if session.canAddOutput(dataOutput) {
-        session.addOutput(dataOutput)
-        dataOutput.alwaysDiscardsLateVideoFrames = true
-        dataOutput.setSampleBufferDelegate(self, queue: videoDataOutputQueue)
-      } else {
-        throw AppError.captureSessionSetup(
-          reason: "Could not add video data output to the session"
-        )
-      }
-      
-      // 6
-      session.commitConfiguration()
-      cameraFeedSession = session
+        
+        // 4
+        guard session.canAddInput(deviceInput) else {
+            throw AppError.captureSessionSetup(
+                reason: "Could not add video device input to the session"
+            )
+        }
+        session.addInput(deviceInput)
+        
+        // 5
+        let dataOutput = AVCaptureVideoDataOutput()
+        if session.canAddOutput(dataOutput) {
+            session.addOutput(dataOutput)
+            dataOutput.alwaysDiscardsLateVideoFrames = true
+            dataOutput.setSampleBufferDelegate(self, queue: videoDataOutputQueue)
+        } else {
+            throw AppError.captureSessionSetup(
+                reason: "Could not add video data output to the session"
+            )
+        }
+        
+        // 6
+        session.commitConfiguration()
+        cameraFeedSession = session
     }
     
     private let handPoseRequest: VNDetectHumanHandPoseRequest = {
-      // 1
-      let request = VNDetectHumanHandPoseRequest()
-      
-      // 2
-      request.maximumHandCount = 1
-      return request
+        // 1
+        let request = VNDetectHumanHandPoseRequest()
+        
+        // 2
+        request.maximumHandCount = 2
+        return request
     }()
     
-    var pointsProcessorHandler: ((CGPoint) -> Void)?
+    var pointsProcessorHandler: (([CGPoint]) -> Void)?
 }
 
 
@@ -137,44 +137,64 @@ extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
             orientation: .up,
             options: [:]
         )
-
+        
         do {
-            // 2
+            var allPoints: [CGPoint] = []
             try handler.perform([handPoseRequest])
-
-            // 3
-            guard
-                let observation = handPoseRequest.results?.first
-            else {
-                return
+            
+            
+            for observation in (handPoseRequest.results ?? []){
+                //                guard
+                //                let observation = handPoseRequest.results?.first
+                //            else {
+                //                return
+                //            }
+                
+                let fingers = try observation.recognizedPoints(.all)
+                
+                let jointsToFindCenter: [VNHumanHandPoseObservation.JointName] = [
+                    .thumbTip,
+//                    .thumbCMC,
+                    .wrist,
+                    .indexTip,
+//                    .middleTip,
+//                    .ringTip,
+                    .littleTip
+                ]
+                var pointsToFindCenterOf: [CGPoint] = []
+                
+                for joint in jointsToFindCenter{
+                    if let point = fingers[joint], point.confidence > 0.8{
+                        pointsToFindCenterOf.append(CGPoint(x: point.location.x, y: 1 - point.location.y))
+                    }
+                }
+                let sum = pointsToFindCenterOf.reduce(CGPoint(x: 0, y: 0), { partialResult, point in
+                    var p = partialResult
+                    p.x += point.x
+                    p.y += point.y
+                    return p
+                })
+                let middlePoint = CGPoint(x: sum.x / Double(pointsToFindCenterOf.count),
+                                          y: sum.y / Double(pointsToFindCenterOf.count))
+                allPoints.append(middlePoint)
+//                if let first = fingers[.wrist], first.confidence >= 0.80,
+//                   let second = fingers[.middleTip], second.confidence >= 0.8
+//                {
+//
+//                    let Middle = CGPoint(x: (wrist.location.x + middleBase.location.x)/2,
+//                                         y: (wrist.location.y + middleBase.location.y)/2)
+//                    let point = CGPoint(x: Middle.x, y: 1 - Middle.y)
+//                    allPoints.append(point)
+//
+//                }
             }
-            // 1
-              let fingers = try observation.recognizedPoints(.all)
-
-              // 2
-//              if let thumbTipPoint = fingers[.thumbTip] {
-//                recognizedPoints.append(thumbTipPoint)
-//              }
-              if let indexTipPoint = fingers[.indexTip] {
-//                recognizedPoints.append(indexTipPoint)
-//                  print(indexTipPoint.confidence)
-                  let point = CGPoint(x: indexTipPoint.location.x, y: 1 - indexTipPoint.location.y)
-                  
-                  DispatchQueue.main.async {
-                      self.pointsProcessorHandler?(self.cameraView.previewLayer.layerPointConverted(fromCaptureDevicePoint: point))
-                  }
-              }
-//              if let middleTipPoint = fingers[.middleTip] {
-//                recognizedPoints.append(middleTipPoint)
-//              }
-//              if let ringTipPoint = fingers[.ringTip] {
-//                recognizedPoints.append(ringTipPoint)
-//              }
-//              if let littleTipPoint = fingers[.littleTip] {
-//                recognizedPoints.append(littleTipPoint)
-//              }
-
-
+            
+            DispatchQueue.main.async {
+                let proccessed = allPoints.map { point in
+                    return self.cameraView.previewLayer.layerPointConverted(fromCaptureDevicePoint: point)
+                }
+                self.pointsProcessorHandler?(proccessed)
+            }
         } catch {
             // 4
             cameraFeedSession?.stopRunning()

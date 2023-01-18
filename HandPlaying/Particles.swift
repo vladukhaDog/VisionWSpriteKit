@@ -15,7 +15,7 @@ struct WaterParticle: Particle{
     
     var maxPercentToUse: Double = 30
     var id: String = "1"
-    var size: CGSize = .init(width: 20, height: 20)
+    var size: CGSize = .init(width: 17, height: 17)
     var barColor: Color = .blue
     
     var delayBeforePhysics: Double = 0
@@ -24,8 +24,8 @@ struct WaterParticle: Particle{
     var restitution: CGFloat = 0.6
     var hasPhysics: Bool = true
     var secondsToDissapear: Double = 3
-    var spreadMultiplier: Int = 3
-    var maxAmount: Int = 4
+    var spreadMultiplier: Int = 4
+    var maxAmount: Int = 7
     var shouldMoveWithFingerVector: Bool = true
 }
 struct FertilizeParticle: Particle{

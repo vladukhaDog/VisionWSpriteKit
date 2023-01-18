@@ -11,7 +11,7 @@ import SwiftUI
 ///bridge from UIKit view to SUi View
 struct CameraView: UIViewControllerRepresentable {
   
-    var pointsProcessorHandler: ((CGPoint) -> Void)?
+    var pointsProcessorHandler: (([CGPoint]) -> Void)?
   func makeUIViewController(context: Context) -> CameraViewController {
     let cvc = CameraViewController()
       cvc.pointsProcessorHandler = pointsProcessorHandler
