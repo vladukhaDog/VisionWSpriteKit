@@ -53,7 +53,6 @@ class GameScene: SKScene {
             loc.y += CGFloat(((particle.spreadRange).randomElement() ?? 0) * particle.spreadMultiplier)
             guard loc.y >= 0, loc.x >= 0 else {return}
             box.position = loc
-            print(loc)
             ///Создаем физические свойства
             
             ///Назначаем размер физического тела

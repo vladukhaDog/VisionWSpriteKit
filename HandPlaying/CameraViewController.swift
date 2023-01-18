@@ -154,18 +154,20 @@ extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
                 
                 let jointsToFindCenter: [VNHumanHandPoseObservation.JointName] = [
                     .thumbTip,
-//                    .thumbCMC,
+                    //                    .thumbCMC,
                     .wrist,
                     .indexTip,
-//                    .middleTip,
-//                    .ringTip,
-                    .littleTip
+                    //                    .middleTip,
+                    //                    .ringTip,
+                        .littleTip
                 ]
                 var pointsToFindCenterOf: [CGPoint] = []
                 
                 for joint in jointsToFindCenter{
                     if let point = fingers[joint], point.confidence > 0.8{
                         pointsToFindCenterOf.append(CGPoint(x: point.location.x, y: 1 - point.location.y))
+                    }else{
+                        return
                     }
                 }
                 let sum = pointsToFindCenterOf.reduce(CGPoint(x: 0, y: 0), { partialResult, point in
@@ -177,16 +179,6 @@ extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
                 let middlePoint = CGPoint(x: sum.x / Double(pointsToFindCenterOf.count),
                                           y: sum.y / Double(pointsToFindCenterOf.count))
                 allPoints.append(middlePoint)
-//                if let first = fingers[.wrist], first.confidence >= 0.80,
-//                   let second = fingers[.middleTip], second.confidence >= 0.8
-//                {
-//
-//                    let Middle = CGPoint(x: (wrist.location.x + middleBase.location.x)/2,
-//                                         y: (wrist.location.y + middleBase.location.y)/2)
-//                    let point = CGPoint(x: Middle.x, y: 1 - Middle.y)
-//                    allPoints.append(point)
-//
-//                }
             }
             
             DispatchQueue.main.async {
