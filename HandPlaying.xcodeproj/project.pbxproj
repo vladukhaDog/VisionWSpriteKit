@@ -291,7 +291,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"HandPlaying/Preview Content\"";
-				DEVELOPMENT_TEAM = FL98HY8592;
+				DEVELOPMENT_TEAM = SZ24TTUHBL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "I want to see you";
@@ -321,7 +321,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"HandPlaying/Preview Content\"";
-				DEVELOPMENT_TEAM = FL98HY8592;
+				DEVELOPMENT_TEAM = SZ24TTUHBL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "I want to see you";
