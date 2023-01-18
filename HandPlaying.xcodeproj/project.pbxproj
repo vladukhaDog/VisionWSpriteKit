@@ -11,6 +11,12 @@
 		61AE63082977C43E0081B3D3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AE63072977C43E0081B3D3 /* ContentView.swift */; };
 		61AE630A2977C43F0081B3D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61AE63092977C43F0081B3D3 /* Assets.xcassets */; };
 		61AE630D2977C43F0081B3D3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61AE630C2977C43F0081B3D3 /* Preview Assets.xcassets */; };
+		61AE63162977C9300081B3D3 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AE63152977C9300081B3D3 /* CameraViewController.swift */; };
+		61AE63182977C94A0081B3D3 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AE63172977C94A0081B3D3 /* CameraView.swift */; };
+		61AE631A2977C9650081B3D3 /* CameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AE63192977C9640081B3D3 /* CameraPreview.swift */; };
+		61AE631C2977D64E0081B3D3 /* SceneKitLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AE631B2977D64E0081B3D3 /* SceneKitLayer.swift */; };
+		61AE631E2977D6670081B3D3 /* ParticleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AE631D2977D6670081B3D3 /* ParticleProtocol.swift */; };
+		61AE63202977D6740081B3D3 /* Particles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AE631F2977D6740081B3D3 /* Particles.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +25,12 @@
 		61AE63072977C43E0081B3D3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		61AE63092977C43F0081B3D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		61AE630C2977C43F0081B3D3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		61AE63152977C9300081B3D3 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		61AE63172977C94A0081B3D3 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		61AE63192977C9640081B3D3 /* CameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreview.swift; sourceTree = "<group>"; };
+		61AE631B2977D64E0081B3D3 /* SceneKitLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneKitLayer.swift; sourceTree = "<group>"; };
+		61AE631D2977D6670081B3D3 /* ParticleProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleProtocol.swift; sourceTree = "<group>"; };
+		61AE631F2977D6740081B3D3 /* Particles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Particles.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +65,12 @@
 			children = (
 				61AE63052977C43E0081B3D3 /* HandPlayingApp.swift */,
 				61AE63072977C43E0081B3D3 /* ContentView.swift */,
+				61AE63152977C9300081B3D3 /* CameraViewController.swift */,
+				61AE63192977C9640081B3D3 /* CameraPreview.swift */,
+				61AE63172977C94A0081B3D3 /* CameraView.swift */,
+				61AE631B2977D64E0081B3D3 /* SceneKitLayer.swift */,
+				61AE631D2977D6670081B3D3 /* ParticleProtocol.swift */,
+				61AE631F2977D6740081B3D3 /* Particles.swift */,
 				61AE63092977C43F0081B3D3 /* Assets.xcassets */,
 				61AE630B2977C43F0081B3D3 /* Preview Content */,
 			);
@@ -137,8 +155,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61AE631A2977C9650081B3D3 /* CameraPreview.swift in Sources */,
+				61AE63202977D6740081B3D3 /* Particles.swift in Sources */,
+				61AE631C2977D64E0081B3D3 /* SceneKitLayer.swift in Sources */,
 				61AE63082977C43E0081B3D3 /* ContentView.swift in Sources */,
 				61AE63062977C43E0081B3D3 /* HandPlayingApp.swift in Sources */,
+				61AE63162977C9300081B3D3 /* CameraViewController.swift in Sources */,
+				61AE63182977C94A0081B3D3 /* CameraView.swift in Sources */,
+				61AE631E2977D6670081B3D3 /* ParticleProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +294,7 @@
 				DEVELOPMENT_TEAM = FL98HY8592;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "I want to see you";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -299,6 +324,7 @@
 				DEVELOPMENT_TEAM = FL98HY8592;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "I want to see you";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
