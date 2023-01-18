@@ -19,11 +19,7 @@ struct ContentView: View {
         
     }
     var body: some View {
-        CameraView(pointsProcessorHandler: { point in
-            DispatchQueue.main.async {
-                scene.create(point)
-            }
-        })
+        cameraView
         .overlay(
             SpriteView(scene: scene, options: [.allowsTransparency])
                 .background(GeometryReader{geo in
@@ -34,6 +30,14 @@ struct ContentView: View {
                 })
         )
         
+    }
+    
+    private var cameraView: some View{
+        CameraView(pointsProcessorHandler: { point in
+            DispatchQueue.main.async {
+                scene.create(point)
+            }
+        })
     }
 }
 
